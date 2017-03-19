@@ -5,6 +5,7 @@
 #include <QtWidgets>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
+#include <QtMath>
 
 #include "contentmanager.h"
 #include "choseplaylistdialog.h"
@@ -17,6 +18,7 @@ class Player : public QMainWindow
     QLabel *songNameLabel;
     QLabel *startClock;
     QSlider *songSlider;
+
     bool wasSliderReleased;
     QLabel *endClock;
 
@@ -24,13 +26,17 @@ class Player : public QMainWindow
     QPushButton *nextSongButton;
     QPushButton *playButton;
     QPushButton *pauseButton;
+    QPushButton *volumeButton;
+    QSlider *volumeSlider;
+
     QListWidget *playList;
 
     QLabel *playListNameLabel;
     QMediaPlayer *player;
     ContentManager *manager;
 
-
+    static const qint8 DEFAULT_VOLUME = 50;
+    bool wasEverMuted;
 public:
     Player(QWidget *parent = 0);
     void createMenu();
@@ -50,6 +56,7 @@ protected:
     virtual void closeEvent(QCloseEvent *);
 
 public slots:
+    void slotDEBUG();
     void choseFile();
     void play();
     void pause();
@@ -68,6 +75,11 @@ public slots:
     void slotSetSliderPosition(qint64);
     void slotSetMediaPostion();
     void slotBlockSliderChange();
+
+    void slotSetVolume();
+    void slotChangeMutePlayer();
+
+    void slotDefaultMutingBugFix();
 };
 
 #endif // PLAYER_H
